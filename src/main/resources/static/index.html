@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry Walla - Expert Laundry Services</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS for Modern Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9', // Sky blue
+                        secondary: '#0284c7', // Darker blue
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Toast Animation */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .toast-enter { animation: slideIn 0.3s ease-out forwards; }
+        .toast-exit { animation: fadeOut 0.3s ease-out forwards; }
+
+        /* Smooth theme transition */
+        body { transition: background-color 0.3s ease, color 0.3s ease; }
+    </style>
+    <script>
+        // Check for saved theme or system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased overflow-x-hidden">
+
+<!-- Promotional Banner -->
+<div id="promo-banner" class="bg-gradient-to-r from-primary to-secondary text-white py-2 px-4 text-center relative z-50">
+    <p class="text-sm font-medium">
+        <i class="fa-solid fa-bolt-lightning mr-2"></i>
+        Flash Sale! Get <span class="font-bold underline">20% OFF</span> your first dry cleaning order. Use code: <span class="bg-white/20 px-2 py-0.5 rounded font-mono">FRESH20</span>
+    </p>
+    <button onclick="document.getElementById('promo-banner').remove()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+</div>
+
+<!-- Toast Notification Container -->
+<div id="toast-container" class="fixed top-24 right-5 z-50 flex flex-col gap-2"></div>
+
+<!-- Header -->
+<header id="top" class="fixed w-full top-0 md:top-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm z-40 transition-all">
+    <div class="container mx-auto px-4 md:px-6">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 text-primary">
+                <i class="fa-solid fa-water text-3xl"></i>
+                <h2 class="text-2xl font-bold tracking-tight">Laundry<span class="text-slate-800 dark:text-white">Walla</span></h2>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex gap-8 font-medium text-slate-600 dark:text-slate-400">
+                <a href="#top" class="hover:text-primary transition-colors">Home</a>
+                <a href="#Services" class="hover:text-primary transition-colors">Services</a>
+                <a href="#about" class="hover:text-primary transition-colors">About Us</a>
+                <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                    <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon"></i>
+                    <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun"></i>
+                </button>
+
+                <button class="md:hidden text-2xl text-slate-700 dark:text-slate-300">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="pt-28">
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 md:px-6 py-12 md:py-24">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2 space-y-6">
+                <span class="text-primary font-semibold tracking-wider uppercase text-sm bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full">Premium Care</span>
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight dark:text-white">
+                    Revitalize Your Clothes With <span class="text-primary">Expert Laundry Services!</span>
+                </h1>
+                <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+                    We provide top-notch dry cleaning, washing, and ironing services with free pickup and delivery. Your clothes deserve the best care.
+                </p>
+                <div class="pt-4">
+                    <a href="#Services" class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg shadow-blue-200 dark:shadow-none transform hover:-translate-y-1">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        Book a Service Today
+                    </a>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 relative">
+                <div class="absolute inset-0 bg-primary/10 rounded-3xl transform translate-x-4 translate-y-4"></div>
+                <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1000&auto=format&fit=crop"
+                     alt="Laundry Machine"
+                     class="rounded-3xl shadow-xl relative z-10 w-full h-[500px] object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="bg-white dark:bg-slate-900 py-16 border-y border-slate-100 dark:border-slate-800">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white">Our Achievements</h3>
+                <div class="h-1 w-20 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl hover:shadow-md transition">
+                    <i class="fa-solid fa-shirt text-4xl text-primary mb-4"></i>
+                    <h3 class="text-4xl font-bold text-slate-800 dark:text-white mb-2">15+</h3>
+                    <p class="text-slate-500 dark:text-slate-400 font-medium">Laundry Services</p>
+                </div>
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl hover:shadow-md transition">
+                    <i class="fa-solid fa-face-smile text-4xl text-primary mb-4"></i>
+                    <h3 class="text-4xl font-bold text-slate-800 dark:text-white mb-2">240+</h3>
+                    <p class="text-slate-500 dark:text-slate-400 font-medium">Happy Customers</p>
+                </div>
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl hover:shadow-md transition">
+                    <i class="fa-solid fa-star text-4xl text-primary mb-4"></i>
+                    <h3 class="text-4xl font-bold text-slate-800 dark:text-white mb-2">2+ Yrs</h3>
+                    <p class="text-slate-500 dark:text-slate-400 font-medium">Experience</p>
+                </div>
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-2xl hover:shadow-md transition">
+                    <i class="fa-solid fa-truck-fast text-4xl text-primary mb-4"></i>
+                    <h3 class="text-4xl font-bold text-slate-800 dark:text-white mb-2">5k+</h3>
+                    <p class="text-slate-500 dark:text-slate-400 font-medium">Orders Delivered</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services & Booking Section -->
+    <section class="container mx-auto px-4 md:px-6 py-20" id="Services">
+        <div class="flex flex-col lg:flex-row gap-12">
+
+            <!-- Left: Services List -->
+            <div class="w-full lg:w-3/5">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-slate-800 dark:text-white mb-3">Our Services</h2>
+                    <p class="text-slate-500 dark:text-slate-400">Select the services you need by clicking the 'Add item' button.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Service Card Template -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/30 transition-colors">
+                        <div class="flex gap-4 items-center mb-3 sm:mb-0">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 text-primary w-12 h-12 flex items-center justify-center rounded-xl">
+                                <i class="fa-solid fa-jug-detergent text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-slate-800 dark:text-white">Dry Cleaning</h4>
+                                <span class="text-primary font-semibold">&#8377;200.00</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('Dry Cleaning', 200)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                            Add item <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/30 transition-colors">
+                        <div class="flex gap-4 items-center mb-3 sm:mb-0">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 text-primary w-12 h-12 flex items-center justify-center rounded-xl">
+                                <i class="fa-solid fa-soap text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-slate-800 dark:text-white">Wash & Fold</h4>
+                                <span class="text-primary font-semibold">&#8377;100.00</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('Wash & Fold', 100)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                            Add item <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/30 transition-colors">
+                        <div class="flex gap-4 items-center mb-3 sm:mb-0">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 text-primary w-12 h-12 flex items-center justify-center rounded-xl">
+                                <i class="fa-solid fa-temperature-arrow-up text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-slate-800 dark:text-white">Ironing</h4>
+                                <span class="text-primary font-semibold">&#8377;30.00</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('Ironing', 30)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                            Add item <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/30 transition-colors">
+                        <div class="flex gap-4 items-center mb-3 sm:mb-0">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 text-primary w-12 h-12 flex items-center justify-center rounded-xl">
+                                <i class="fa-solid fa-spray-can-sparkles text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-slate-800 dark:text-white">Stain Removal</h4>
+                                <span class="text-primary font-semibold">&#8377;500.00</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('Stain Removal', 500)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                            Add item <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/30 dark:hover:border-primary/30 transition-colors">
+                        <div class="flex gap-4 items-center mb-3 sm:mb-0">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 text-primary w-12 h-12 flex items-center justify-center rounded-xl">
+                                <i class="fa-solid fa-hat-cowboy text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-slate-800 dark:text-white">Leather Cleaning</h4>
+                                <span class="text-primary font-semibold">&#8377;999.00</span>
+                            </div>
+                        </div>
+                        <button onclick="addToCart('Leather Cleaning', 999)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                            Add item <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex items-center gap-2 text-slate-500 dark:text-slate-400 bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30">
+                    <i class="fa-solid fa-circle-info text-primary"></i>
+                    <p class="text-sm">Prices are estimated. Final cost may vary based on material inspection.</p>
+                </div>
+            </div>
+
+            <!-- Right: Cart & Booking Form -->
+            <div class="w-full lg:w-2/5 relative">
+                <div class="sticky top-28 space-y-6">
+                    <!-- Cart Widget -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none p-6 sm:p-8 border border-slate-100 dark:border-slate-800">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-3">
+                            <i class="fa-solid fa-cart-flatbed text-primary"></i> Your Cart
+                        </h3>
+
+                        <!-- Cart Items Header -->
+                        <div class="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b dark:border-slate-800 pb-2">
+                            <span>Service</span>
+                            <span>Price</span>
+                        </div>
+
+                        <!-- Cart Items List -->
+                        <ul id="cart-items" class="space-y-3 mb-6 min-h-[100px] text-slate-600 dark:text-slate-400">
+                            <li class="text-center text-slate-400 py-6 text-sm italic" id="empty-cart-msg">Your cart is currently empty.</li>
+                        </ul>
+
+                        <!-- Total -->
+                        <div class="border-t border-slate-100 dark:border-slate-800 pt-4 mb-8">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-slate-800 dark:text-white">Total Amount</span>
+                                <span id="cart-total" class="text-2xl font-black text-primary">&#8377;0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Booking Form -->
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-4 border-t dark:border-slate-800 pt-6">Booking Details</h4>
+                        <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+                            <div>
+                                <label for="fullName" class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Full Name</label>
+                                <input type="text" id="fullName" required placeholder="John Doe"
+                                       class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Email</label>
+                                    <input type="email" id="email" required placeholder="john@example.com"
+                                           class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Phone</label>
+                                    <input type="tel" id="phone" required placeholder="+91 9876543210"
+                                           class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-4 rounded-xl font-bold text-lg mt-4 transition-colors shadow-lg shadow-blue-200 dark:shadow-none">
+                                Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Features Section -->
+    <section class="bg-primary text-white py-16">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-4">
+                    <i class="fa-solid fa-gem text-5xl mb-4 text-blue-200"></i>
+                    <h3 class="text-xl font-bold mb-2">Premium Quality</h3>
+                    <p class="text-blue-100 text-sm">Top-tier detergents and processes ensuring fabric longevity.</p>
+                </div>
+                <div class="p-4">
+                    <i class="fa-solid fa-headset text-5xl mb-4 text-blue-200"></i>
+                    <h3 class="text-xl font-bold mb-2">Quick Support</h3>
+                    <p class="text-blue-100 text-sm">24/7 dedicated customer service to track your orders.</p>
+                </div>
+                <div class="p-4">
+                    <i class="fa-solid fa-truck-fast text-5xl mb-4 text-blue-200"></i>
+                    <h3 class="text-xl font-bold mb-2">Free Delivery</h3>
+                    <p class="text-blue-100 text-sm">Hassle-free doorstep pickup and drop across the city.</p>
+                </div>
+                <div class="p-4">
+                    <i class="fa-solid fa-tags text-5xl mb-4 text-blue-200"></i>
+                    <h3 class="text-xl font-bold mb-2">Affordable Prices</h3>
+                    <p class="text-blue-100 text-sm">Transparent pricing with no hidden charges whatsoever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="container mx-auto px-4 md:px-6 py-20">
+        <div class="bg-slate-900 dark:bg-slate-900 rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden">
+            <!-- Background decoration -->
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+
+            <div class="w-full md:w-5/12 relative z-10 text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Subscribe to our newsletter</h2>
+                <p class="text-slate-400">Get 20% off your first order and receive weekly laundry tips!</p>
+            </div>
+
+            <div class="w-full md:w-7/12 relative z-10">
+                <form id="newsletterForm" onsubmit="subscribeNewsletter(event)" class="flex flex-col sm:flex-row gap-4">
+                    <input type="text" id="subName" placeholder="Your Name" required
+                           class="w-full sm:flex-1 px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white/20 transition-all">
+                    <input type="email" id="subEmail" placeholder="Email Address" required
+                           class="w-full sm:flex-1 px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white/20 transition-all">
+                    <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-secondary text-white font-bold rounded-xl transition-colors whitespace-nowrap shadow-lg shadow-primary/20">
+                        Subscribe Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 text-slate-600 dark:text-slate-400" id="contact">
+    <div class="container mx-auto px-4 md:px-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12 border-b border-slate-200 dark:border-slate-800 pb-12">
+
+            <div id="about">
+                <div class="flex items-center gap-2 text-primary mb-6">
+                    <i class="fa-solid fa-water text-2xl"></i>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">Laundry<span class="text-slate-500">Walla</span></h2>
+                </div>
+                <p class="text-sm leading-relaxed mb-6">
+                    We are your neighborhood's most trusted laundry and dry cleaning experts, dedicated to making your life easier, one garment at a time.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-slate-800 dark:text-white mb-6 uppercase text-sm tracking-wider">Quick Links</h3>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#about" class="hover:text-primary transition-colors">About Us</a></li>
+                    <li><a href="#contact" class="hover:text-primary transition-colors">Contact Us</a></li>
+                    <li><a href="#Services" class="hover:text-primary transition-colors">Pricing</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-slate-800 dark:text-white mb-6 uppercase text-sm tracking-wider">Contact Info</h3>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1 text-primary"></i>
+                        <span>123 Clean Street, Washville,<br>Cityville State 12345</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-primary"></i>
+                        <span>+91 91234 56780</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-slate-800 dark:text-white mb-6 uppercase text-sm tracking-wider">Follow Us</h3>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-sm text-slate-500">
+            <p>&copy; <span id="year"></span> Laundry Walla. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript Logic -->
+<script>
+    // --- Theme Toggle Logic ---
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    // Change the icons based on the current theme
+    if (document.documentElement.classList.contains('dark')) {
+        themeToggleLightIcon.classList.remove('hidden');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        // Toggle icons
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        // If is dark mode
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    });
+
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Cart Logic ---
+    let cart = [];
+
+    function addToCart(serviceName, price) {
+        cart.push({ name: serviceName, price: price });
+        updateCartUI();
+        showToast(`Added ${serviceName} to your cart!`, 'success');
+    }
+
+    function removeFromCart(index) {
+        const removed = cart.splice(index, 1)[0];
+        updateCartUI();
+        showToast(`Removed ${removed.name}`, 'info');
+    }
+
+    function updateCartUI() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<li class="text-center text-slate-400 py-6 text-sm italic" id="empty-cart-msg">Your cart is currently empty.</li>';
+            cartTotalElement.innerHTML = '&#8377;0.00';
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            const li = document.createElement('li');
+            li.className = 'flex justify-between items-center py-2 group';
+            li.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300">${index + 1}. ${item.name}</span>
+                </div>
+                <span class="font-bold text-slate-800 dark:text-white">&#8377;${item.price.toFixed(2)}</span>
+            `;
+            cartItemsContainer.appendChild(li);
+        });
+
+        cartTotalElement.innerHTML = `&#8377;${total.toFixed(2)}`;
+    }
+
+    async function submitBooking(event) {
+        event.preventDefault();
+        if (cart.length === 0) {
+            showToast("Please add at least one service to your cart before booking.", "error");
+            return;
+        }
+
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+
+        let totalAmount = 0;
+        const cartItems = cart.map(item => {
+            totalAmount += item.price;
+            return {
+                service: item.name,
+                price: item.price.toString()
+            };
+        });
+
+        const bookingRequest = {
+            fullName: fullName,
+            email: email,
+            phone: phone,
+            totalAmount: totalAmount,
+            cartItems: cartItems
+        };
+
+        const btn = event.target.querySelector('button[type="submit"]');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingRequest)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                showToast(`Thank you, ${fullName}! Your booking has been saved. ID: LW${String(data.bookingId).padStart(5, '0')}`, 'success');
+                event.target.reset();
+                cart = [];
+                updateCartUI();
+            } else {
+                showToast("Failed to save booking. Please check your details.", "error");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showToast("Failed to connect to the server. Please try again later.", "error");
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    async function subscribeNewsletter(event) {
+        event.preventDefault();
+        const name = document.getElementById('subName').value;
+        const email = document.getElementById('subEmail').value;
+        
+        const btn = event.target.querySelector('button[type="submit"]');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subscribing...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fullName: name, email: email })
+            });
+
+            const data = await response.json();
+            
+            if (response.ok && data.success) {
+                showToast(data.message || `Awesome! ${email} has been subscribed.`, 'success');
+                event.target.reset();
+            } else {
+                showToast(data.message || "Failed to subscribe.", "error");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showToast("Failed to connect to the server. Please try again later.", "error");
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    // --- Toast Notifications ---
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast-enter flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border-l-4 min-w-[300px] max-w-md bg-white dark:bg-slate-800 dark:text-white`;
+
+        let iconClass, borderClass, iconColor;
+        if (type === 'success') {
+            iconClass = 'fa-solid fa-circle-check';
+            borderClass = 'border-green-500';
+            iconColor = 'text-green-500';
+        } else if (type === 'error') {
+            iconClass = 'fa-solid fa-circle-exclamation';
+            borderClass = 'border-red-500';
+            iconColor = 'text-red-500';
+        } else {
+            iconClass = 'fa-solid fa-circle-info';
+            borderClass = 'border-blue-500';
+            iconColor = 'text-blue-500';
+        }
+
+        toast.classList.add(borderClass);
+        toast.innerHTML = `<i class="${iconClass} ${iconColor} text-xl"></i><p class="text-sm font-medium">${message}</p>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.remove('toast-enter');
+            toast.classList.add('toast-exit');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+</script>
+</body>
+
+</html>

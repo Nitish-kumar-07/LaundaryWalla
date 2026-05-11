@@ -1,0 +1,338 @@
+*{
+    padding: 0;
+    margin: 0;
+    max-width: 99vw;
+}
+:root {
+  --primary-color: #1e90ff;     /* Dodger Blue */
+  --secondary-color: #383737;   /* White */
+  --accent-color: #ff9800;
+  --background-color:lab(93.93% 2.35 0.83 / 0.308);
+  --optional-color: White;     /* Optional: Orange accent */
+  --font-family: 'Segoe UI', sans-serif;
+  --base-padding: 1rem;
+}
+header{
+    background-color: white;
+}
+.header-section{
+    margin-top: 1rem;
+    margin-top: 0;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+     background-color: white;
+}
+.nav-item{
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+.nav-item li{
+    align-items: center;
+    text-align: center;
+}
+.nav-item li a{
+    text-decoration: none;
+    color:var(--secondary-color) ;
+    font-weight: 1rem;
+}
+.nav-item li a:hover{
+    border: 1px solid var(--accent-color);
+    padding: 0.3rem;
+    border-radius: 8px;
+    background-color: var(--accent-color);
+    color: var(--optional-color);
+    transform: scale(1.2, 1.2);
+}
+/* .nav-item li a:visited{
+    background-color: var(--optional-color);
+    border: var(--optional-color);
+    color: var(--secondary-color);
+} */
+.Username{
+    background-color: hwb(197 83% 1% / 0.975);
+    padding: 0.2rem 0.7rem;
+    color: var(--primary-color);
+    /* border: 1px solid var(--primary-color); */
+    border-radius: 8px;
+
+}
+.Username h3{
+      font-size: 1.2rem;
+
+}
+.Username:hover{
+    background-color: var(--primary-color);
+    color: var(--optional-color);
+    transform: scale(1.2, 1.2);
+}
+.hero{
+    margin-top: 5vh;
+    padding: 5vh 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--background-color);
+   align-items: center;
+}
+.hero h2{
+    font-weight: bold;
+}
+.hero p{
+    font-size: 0.8rem;
+}
+.hero button{
+    background-color:var(--primary-color);
+    padding: 10px;
+    border: 2px;
+    border-radius: 8px;
+}
+.hero button a{
+    text-decoration: none;
+     font-size: 1rem;
+     font-weight: bold;
+     color: white;
+
+}
+.Achievements{
+    background-color: var(--primary-color);
+}
+.achievements{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: start;
+}
+.achievements h3{
+    font-size: 1.5rem;
+    margin-bottom: 0rem;
+    padding-bottom: 0;
+}
+.achievements p{
+    font-size: 0.8rem;
+    margin-top: 0;
+
+}
+.Serivce-section{
+    display: flex;
+    justify-content: space-around;
+    padding: 80px 0px;
+    margin-bottom: 5px;
+    background-color:var(--background-color) ;
+}
+.left{
+    padding:1rem;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.Service-head h2{
+    font-weight: bold;
+}
+.Service-head p{
+    font-size: 0.9rem;
+}
+.Service-head{
+    border-bottom: 3px solid var(--accent-color);
+}
+.service-option{
+   padding-top: 30px;
+}
+.each-service{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.each-service p{
+    font-size: 0.8rem;
+
+
+}
+.each-service span{
+    font-size: 1rem;
+    font-weight: bolder;
+   color: #00eeff;
+
+}
+.each-service button{
+    border: none;
+    padding: 3px 15px;
+    border-radius: 8px;
+
+}
+.each-service button i{
+    margin-left: 5px;
+    align-items: center;
+}
+.botton-para{
+    color: var(--primary-color);
+    font-size: rem;
+    border-top:3px solid var(--accent-color) ;
+    margin-top: 30px;
+    padding: 10px 0;
+}
+.botton-para i{
+    margin-right: 10px;
+    font-size: 0.8rem;
+    border: 1px solid;
+    padding: 2px;
+    border-radius: 50%;
+}
+.each-service button:hover{
+color: red;
+background-color: rgba(242, 141, 141, 0.526);
+}
+.quick-links{
+     margin: 50px 0px;
+}
+.quick-links i{
+    font-size: 3rem;
+}
+.special{
+    text-align: center;
+}
+.special h3{
+    font-size: 1.3rem;
+}
+.special p{
+    font-size: 1rem;
+    letter-spacing: 1px;
+
+}
+.news{
+    background-color: #1e90ff;
+    display: flex;
+    justify-content: space-around;
+    padding: 3rem 0;
+    color: white;
+    letter-spacing: 1px;
+}
+.news h2{
+    font-size: 30px;
+}
+.news form input{
+    color: white;
+    background-color: rgba(0, 0, 255, 0.134);
+    border: none;
+    padding: 3px;
+    margin-bottom: 5px;
+}
+.Subscribe{
+    border: none;
+    padding: 3px 60px;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+footer{
+    background-color: var(--background-color);
+    padding: 20px ;
+}
+
+.footer-item h3{
+    font-size: 1rem;
+}
+.footer-item p{
+    color: var(--secondary-color);
+    font-size: 0.7rem;
+}
+.footer-item ul li{
+    list-style: none;
+
+}
+.footer-item ul{
+    padding: 0px;
+}
+.footer-item ul li a{
+    text-decoration: none;
+    color: var(--secondary-color);
+    padding: 2px;
+    border: 2px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+}
+.footer-item ul li a:hover{
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+
+}
+.contact ul{
+    font-size: 0.7rem;
+    color: var(--secondary-color);
+
+}
+.follow ul{
+    display: flex;
+    align-items: flex-start;
+
+}
+.selected-head{
+    display: flex;
+    justify-content: space-between;
+    font: size 18px;;
+    font-weight: 500;
+    background:linear-gradient(120deg, #d9dddd, #1e90ff);
+    padding: 2px 5px;
+    border: none;
+    border-radius: 6px;
+
+}
+.right-top ol li{
+   display: flex;
+    justify-content: space-between;
+    font-size:  18px;
+    font-weight: 400;
+    padding: 2px 0;
+    border: none;
+    border-top: 1px solid black;
+}
+.remove{
+    background-color: red;
+    color: #fff;
+}
+.right-top{
+    margin-bottom: 1rem;
+    padding:1rem;
+    background-color: white;
+    border-radius: 12px;
+}
+.right-bottom{
+    margin-top: 2rem;
+    padding:1rem;
+    background-color: white;
+    border-radius: 12px;
+}
+.right-bottom button{
+    background-color:var(--primary-color);
+    padding: 10px;
+    border: 2px;
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+}
+.contact-no{
+    display: flex;
+    padding: 10px 0;
+}
+.right-bottom input{
+    border-radius: 8px;
+    border: 2px solid var(--accent-color) ;
+    width: 100%;
+    padding: 3px 0;
+    margin: 15px 0;
+
+}
+.total-display{
+    font-weight: bold;
+    margin-top: 10px;
+    border-top: 1px solid;
+}
