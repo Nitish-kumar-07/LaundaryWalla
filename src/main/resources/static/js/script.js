@@ -85,7 +85,7 @@ function submitBooking() {
     bookBtn.disabled = true;
 
     // Call Spring Boot API
-    fetch('http://localhost:8081/api/bookings', {
+    fetch('http://localhost:8080/api/bookings', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ function subscribeNewsletter(event) {
         email: email
     };
 
-    fetch('http://localhost:8081/api/subscribe', {
+    fetch('http://localhost:8080/api/subscribe', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
